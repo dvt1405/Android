@@ -49,6 +49,8 @@ public class DBManager extends SQLiteOpenHelper {
             "   FOREIGN KEY (IdPractice)" +
             "   REFERENCES PRACTICE(Id)" +
             ")";
+
+
     public DBManager(Context context)  {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -64,7 +66,10 @@ public class DBManager extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         Log.i(TAG, "GuidDatabse.onUpgrate...");
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS PRACTICEGROUP");
+        sqLiteDatabase.execSQL(CREATE_PRACTICEGROUP_TABLE);
+        sqLiteDatabase.execSQL(CREATE_PRACTICEGROUP_TABLE);
+        sqLiteDatabase.execSQL(CREATE_PRACTICE_TABLE);
+        sqLiteDatabase.execSQL(CREATE_GUIDE_TABLE);
         onCreate(sqLiteDatabase);
     }
     public void onCreateDefaultGuideDatabase(){

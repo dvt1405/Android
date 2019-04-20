@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,6 +27,8 @@ import model.PracticeGroupAdapter;
 public class Fragment_HomeScreen extends Fragment {
     private List<PracticeGroup> listPracticeGroup;
     private ListView listView;
+    private LinearLayout linearLayout;
+
     TextView textView;
     @Nullable
     @Override
@@ -34,11 +37,17 @@ public class Fragment_HomeScreen extends Fragment {
         initView(view);
         //------------Set adapter-----------
         PracticeGroupAdapter adapter = new PracticeGroupAdapter(listPracticeGroup, container.getContext(), R.layout.item_listview_homescreen);
-        listView.setAdapter(adapter);
-
         final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        listView.setAdapter(adapter);
         //-------------Click an item------------------
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(onItemClicked(fragmentTransaction));
+        return view;
+    }
+    public View onReselected( LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_homesreen, container, false);
+    }
+    private AdapterView.OnItemClickListener onItemClicked(final FragmentTransaction fragmentTransaction){
+        return new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 FragmentListPractice fragmentListPractice = new FragmentListPractice();
@@ -46,15 +55,17 @@ public class Fragment_HomeScreen extends Fragment {
                 bundle.putSerializable("practicegroup",listPracticeGroup.get(i));
                 bundle.putString("bundle", "bundle");
                 fragmentListPractice.setArguments(bundle);
-                fragmentTransaction.replace(R.id.root_frame,fragmentListPractice);
+                fragmentTransaction.replace(R.id.frameLayoutMainActivity ,fragmentListPractice);
+                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
-        });
-        return view;
+        };
     }
+
     public void initView(View view) {
         this.listView = view.findViewById(R.id.listViewTab1);
         this.listPracticeGroup = new ArrayList<>();
+        this.linearLayout = view.findViewById(R.id.linerLayoutFragmentHomesSreen);
         //-----Data-Test------
         Guide guid1 = new Guide("Guide 1", 2, "");
         Guide guid2 = new Guide("Guide 2", 2, "");
@@ -91,5 +102,6 @@ public class Fragment_HomeScreen extends Fragment {
         this.listPracticeGroup.add(practiceGroup3);
         this.listPracticeGroup.add(practiceGroup1);
     }
+
 
 }

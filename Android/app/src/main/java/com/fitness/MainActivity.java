@@ -1,52 +1,72 @@
 package com.fitness;
 
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
+import android.widget.FrameLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private ViewPager viewPager;
-    TabLayout tabLayout;
-    private List<Fragment> listFragment;
+    private ActionBar navigationBottom;
+    BottomNavigationView navigationView;
+    private FrameLayout frameLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
-
-        //--------Init Fragment--------------------------
-        Fragment_HomeScreen homeScreen = new Fragment_HomeScreen();
-        Fragment_CustomWorkScreen secondScreen = new Fragment_CustomWorkScreen();
-        FragmentListPractice listPractice = new FragmentListPractice();
-
-        //-------Add list fragment to display------------
-        listFragment.add(homeScreen);
-        listFragment.add(secondScreen);
-        listFragment.add(listPractice);
-
-        //-------Set ViewPager--------------------------
-        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager(),listFragment);
-        viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(2);
-        //-------Set button TabLayout-----------------
-        tabLayout.setupWithViewPager(viewPager);
-
-        //--------Set icon Tablayout------------
-        for(int i = 0; i<tabLayout.getTabCount();i++) {
-            tabLayout.getTabAt(i).setIcon(adapter.getTabIcon()[i]);
-        }
+        navigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
+       ;
     }
 
     private void initView() {
-        viewPager = findViewById(R.id.viewPagerHome);
-        tabLayout= (TabLayout) findViewById(R.id.tabLayout);
-        listFragment = new ArrayList<>();
+        navigationBottom = getSupportActionBar();
+        navigationView = findViewById(R.id.bottomNavigation);
+        frameLayout = findViewById(R.id.frameLayoutMainActivity);
+        loadFragmentt(new Fragment_HomeScreen());
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            Fragment fragment;
+            switch (menuItem.getItemId()) {
+                case R.id.navigation_shop:
+                    loadFragmentt(new Fragment_HomeScreen());
+                    return true;
+                case R.id.navigation_gifts:
+                    loadFragmentt(new Fragment_CustomWorkScreen());
+                    return true;
+                case R.id.navigation_cart:
+                    loadFragmentt(new Fragment_HomeScreen());
+                    return true;
+                case R.id.navigation_profile:
+                    loadFragmentt(new Fragment_HomeScreen());
+                    return true;
+            }
+            return false;
+        }
+    };
+    public void loadFragmentt(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayoutMainActivity, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
 }

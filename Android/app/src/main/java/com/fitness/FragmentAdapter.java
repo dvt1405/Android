@@ -20,14 +20,6 @@ public class FragmentAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-        switch(i) {
-            case 0:
-                return new Fragment_HomeScreen_Frame();
-            case 1:
-                return new Fragment_CustomWork_Frame();
-                default:
-                    break;
-        }
         return this.listFragment.get(i);
     }
 
