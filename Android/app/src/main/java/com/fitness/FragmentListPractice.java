@@ -1,5 +1,6 @@
 package com.fitness;
 
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.drm.DrmStore;
 import android.os.Bundle;
@@ -27,9 +28,9 @@ import model.PracticeGroup;
 public class FragmentListPractice extends Fragment {
     private ListView listView;
     private PracticeGroup practiceGroup; // get from Fragment_Home_Screen
-    private Toolbar toolbar;
     private ImageButton buttonBack;
     private TextView textView;
+    private CollapsingToolbarLayout toolbarLayout;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,20 +40,21 @@ public class FragmentListPractice extends Fragment {
         Bundle getPracticeGroup = getArguments();
         if (getPracticeGroup != null) {
             practiceGroup = (PracticeGroup) getPracticeGroup.getSerializable("practicegroup");
+            textView.setText(practiceGroup.getName());
             listView.setAdapter(new PracticeAdapter(practiceGroup.getListPractice(), container.getContext(), R.layout.item_listview_homescreen));
             listView.setOnItemClickListener(onItemClicked());
         }
 
+        buttonBack.setOnClickListener(buttonBackClicked());
         return view;
     }
 
     public void initView(View view) {
         listView = view.findViewById(R.id.listViewPracticeScreen);
-        toolbar = getActivity().findViewById(R.id.toolbarListPractice);
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.setSupportActionBar(toolbar);
-        textView = activity.findViewById(R.id.textToolbar);
-        textView.setText(R.string.app_name);
+        toolbarLayout = view.findViewById(R.id.toolbarListPractice);
+        buttonBack = toolbarLayout.findViewById(R.id.buttonToolbar);
+        textView = toolbarLayout.findViewById(R.id.textToolbar);
+
     }
 
 
@@ -66,21 +68,19 @@ public class FragmentListPractice extends Fragment {
                 sendPractice.putSerializable("practice", practiceGroup.getListPractice().get(i));
                 fragmentGuidePractice.setArguments(sendPractice);
                 fragmentTransaction.replace(R.id.frameLayoutMainActivity, fragmentGuidePractice);
-                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.addToBackStack("backStackListPractice");
                 fragmentTransaction.commit();
             }
         };
     }
 
     private View.OnClickListener buttonBackClicked() {
-        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fragmentTransaction.replace(R.id.frameLayoutMainActivity, new Fragment_HomeScreen());
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                getFragmentManager().popBackStack("backStackHomeScreen",1);
             }
         };
     }
+
 }

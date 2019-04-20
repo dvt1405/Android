@@ -56,7 +56,8 @@ public class Fragment_HomeScreen extends Fragment {
                 bundle.putString("bundle", "bundle");
                 fragmentListPractice.setArguments(bundle);
                 fragmentTransaction.replace(R.id.frameLayoutMainActivity ,fragmentListPractice);
-                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_ENTER_MASK);
+                fragmentTransaction.addToBackStack("backStackHomeScreen");
                 fragmentTransaction.commit();
             }
         };

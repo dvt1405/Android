@@ -1,5 +1,6 @@
 package com.fitness;
 
+import android.media.ImageWriter;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
@@ -24,15 +25,16 @@ public class MainActivity extends AppCompatActivity {
     private ActionBar navigationBottom;
     BottomNavigationView navigationView;
     private FrameLayout frameLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
         navigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
-       ;
-    }
+        navigationView.setOnNavigationItemReselectedListener(onNavigationItemReselectedListener);
 
+    }
     private void initView() {
         navigationBottom = getSupportActionBar();
         navigationView = findViewById(R.id.bottomNavigation);
@@ -44,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-            Fragment fragment;
             switch (menuItem.getItemId()) {
                 case R.id.navigation_shop:
                     loadFragmentt(new Fragment_HomeScreen());
@@ -62,11 +63,23 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     };
+
+    private BottomNavigationView.OnNavigationItemReselectedListener onNavigationItemReselectedListener
+            = new BottomNavigationView.OnNavigationItemReselectedListener() {
+        @Override
+        public void onNavigationItemReselected(@NonNull MenuItem menuItem) {
+            Log.e("Reselected; ", menuItem.getItemId()+"");
+        }
+    };
+
     public void loadFragmentt(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frameLayoutMainActivity, fragment);
-        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

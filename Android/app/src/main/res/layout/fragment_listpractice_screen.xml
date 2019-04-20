@@ -15,6 +15,10 @@
         android:id="@+id/listViewPracticeScreen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
+        android:divider="#fff"
+        android:dividerHeight="10dp"
+        android:footerDividersEnabled="false"
+
         />
 </LinearLayout>

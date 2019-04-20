@@ -4,21 +4,22 @@
     android:layout_height="?android:actionBarSize"
     android:background="#fff"
     android:id="@+id/toolbar"
-    android:elevation="3dp"
+    android:elevation="1dp"
     >
     <ImageButton
-        android:layout_width="?android:actionBarSize"
-        android:layout_height="match_parent"
-        android:background="@drawable/baseline_arrow_back_black_18dp"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_back"
         android:layout_gravity="center_vertical"
         android:id="@+id/buttonToolbar"
+        android:layout_marginLeft="5dp"
         />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="?android:actionBarSize"
+        android:layout_marginStart="0dp"
         android:text="Default"
-        android:textSize="30sp"
+        android:textSize="25sp"
         android:fontFamily="monospace"
         android:gravity="center"
         android:id="@+id/textToolbar"
