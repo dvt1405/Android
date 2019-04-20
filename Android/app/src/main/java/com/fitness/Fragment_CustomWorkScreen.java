@@ -6,12 +6,17 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import java.util.concurrent.TimeUnit;
+
+import model.TestPlayMusicThread;
 
 public class Fragment_CustomWorkScreen extends Fragment {
     private MediaPlayer mediaPlayer;
@@ -33,12 +38,18 @@ public class Fragment_CustomWorkScreen extends Fragment {
             @Override
             public void onClick(View v) {
                 int time  =mediaPlayer.getDuration();
+                Log.e("Time: ",time+"");
                 int current = mediaPlayer.getCurrentPosition();
                 if(current==0) {
                     seekBar.setMax(time);
-                    textView.setText(time);
+                    textView.setText(millisecondToString(time));
+                }else if(current == time) {
+                    mediaPlayer.reset();
                 }
                 mediaPlayer.start();
+                TestPlayMusicThread testPlayMusicThread = new TestPlayMusicThread(mediaPlayer,seekBar,handler, textView);
+
+                testPlayMusicThread.run();
             }
         });
         buttonPause.setOnClickListener(new View.OnClickListener() {
@@ -54,6 +65,12 @@ public class Fragment_CustomWorkScreen extends Fragment {
         buttonStart = view.findViewById(R.id.buttonStart);
         buttonPause = view.findViewById(R.id.buttonStop);
         textView = view.findViewById(R.id.textTime);
+    }
+    public String millisecondToString(int milli) {
+        long minute = TimeUnit.MILLISECONDS.toMinutes(milli);
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(milli);
+        seconds = seconds - minute*60;
+        return minute+":"+seconds;
     }
 
 }
