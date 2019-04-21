@@ -1,26 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/toolbar"
+    <include
         android:id="@+id/toolbarGuidePractice"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        layout="@layout/toolbar"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/linearMainGuideScreen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?android:actionBarSize"
         android:layout_marginBottom="?android:actionBarSize"
-        android:background="@color/design_default_color_primary"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarGuidePractice"
-        >
+        app:layout_constraintTop_toBottomOf="@+id/toolbarGuidePractice">
 
         <TextView
             android:id="@+id/textTime"
@@ -32,31 +28,47 @@
             android:text="Time"
             android:textSize="40sp" />
 
-        <Button
-            android:id="@+id/buttonStart"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="Start" />
-
-        <Button
-            android:id="@+id/buttonStop"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="Stop" />
-
         <SeekBar
             android:id="@+id/seekBar"
             android:layout_width="match_parent"
-            android:layout_height="10dp" />
-    </LinearLayout>
+            android:layout_height="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="2dp"
+            android:fadeScrollbars="true" />
 
-    <LinearLayout
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/linearGuideScreen"
         android:layout_width="match_parent"
         android:layout_height="53dp"
-        android:background="@color/colorAccent"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/linearMainGuideScreen"
-        ></LinearLayout>
+        app:layout_constraintTop_toBottomOf="@id/linearMainGuideScreen">
+
+        <Button
+            android:id="@+id/buttonPrevius"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/ic_previus"
+            android:layout_toLeftOf="@+id/buttonStart"
+            />
+
+        <Button
+            android:id="@+id/buttonStart"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/ic_play"
+            android:elevation="1dp"
+            />
+
+        <Button
+            android:id="@+id/buttonStop"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/buttonStart"
+            android:background="@drawable/ic_next"
+            />
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
