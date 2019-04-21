@@ -21,11 +21,14 @@ import android.widget.FrameLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.PracticeGroup;
+import sqlite.DBManager;
+import sqlite.PracticeGroupDAO;
+
 public class MainActivity extends AppCompatActivity {
     private ActionBar navigationBottom;
     BottomNavigationView navigationView;
     private FrameLayout frameLayout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -23,6 +23,8 @@ import model.GuideAdapter;
 import model.Practice;
 import model.PracticeGroup;
 import model.PracticeGroupAdapter;
+import sqlite.DBManager;
+import sqlite.PracticeGroupDAO;
 
 public class Fragment_HomeScreen extends Fragment {
     private List<PracticeGroup> listPracticeGroup;
@@ -67,6 +69,8 @@ public class Fragment_HomeScreen extends Fragment {
         this.listView = view.findViewById(R.id.listViewTab1);
         this.listPracticeGroup = new ArrayList<>();
         this.linearLayout = view.findViewById(R.id.linerLayoutFragmentHomesSreen);
+        PracticeGroupDAO dbManager = new PracticeGroupDAO(getActivity().getBaseContext());
+        listPracticeGroup = dbManager.getAllPractice();
         //-----Data-Test------
 //        Guide guid1 = new Guide("Guide 1", 2, "");
 //        Guide guid2 = new Guide("Guide 2", 2, "");

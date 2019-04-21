@@ -26,7 +26,7 @@ public class PracticeGroupDAO extends DBManager {
         this.context = context;
     }
 
-    public void addPractice(PracticeGroup practice) {
+    public void addPracticeGroup(PracticeGroup practice) {
         try {
             SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
@@ -34,7 +34,7 @@ public class PracticeGroupDAO extends DBManager {
             contentValues.put(COLUMN_AVATAR, practice.getAvatar());
             contentValues.put(COLUMN_DESCIPTION, practice.getDescription());
             sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
-            sqLiteDatabase.close();
+            Log.e("Rung to here: ", "add done");
         } catch (Exception ex) {
             Log.e("Err: ", ex.getMessage());
         }

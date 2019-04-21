@@ -15,7 +15,7 @@ public class PracticeGroup implements Serializable {
         this.description = desciption;
     }
 
-    public PracticeGroup(int id, String name, int avatar, List<Practice> listPractice, String desciption) {
+    public PracticeGroup(String name, int avatar, String desciption) {
         this.id = id;
         this.name = name;
         this.avatar = avatar;

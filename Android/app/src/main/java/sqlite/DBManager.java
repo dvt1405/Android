@@ -33,19 +33,17 @@ public class DBManager extends SQLiteOpenHelper {
             "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
             "Name VARCHAR(200)," +
             "Avatar INTEGER," +
-            "Description VARCHAR(200)," +
-            "IdPracticegroup INTEGER" +
+            "Description VARCHAR(200)" +
             ")";
     private static  final String CREATE_GUIDE_TABLE ="CREATE TABLE IF NOT EXISTS GUIDE(" +
             "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
             "Name VARCHAR(200)," +
             "Image INTEGER," +
-            "IdPractice INTEGER," +
             "Description VARCHAR(200)" +
             ")";
 
     private static final String CREATE_PRACTICE_PRGROUP = "CREATE TABLE IF NOT EXISTS PRACTICE_PRGROUP(" +
-            "IdPracticegroup INTEGER PRIMARY KEY," +
+            "IdPracticegroup INTEGER," +
             "IdPractice INTEGER PRIMARY KEY," +
             "CONSTRAINT fk_idpracticegroup_" +
             "   FOREIGN KEY (IdPracticegroup)" +
@@ -56,7 +54,7 @@ public class DBManager extends SQLiteOpenHelper {
             ")";
     private static final String CREATE_GUIDE_PRACTICE = "CREATE TABLE IF NOT EXISTS GUIDE_PRACTICE(" +
             "IdGuide INTEGER PRIMARY KEY," +
-            "IdPractice INTEGER PRIMARY KEY," +
+            "IdPractice INTEGER," +
             "CONSTRAINT fk_idpractice_" +
             "   FOREIGN KEY (IdPractice)" +
             "   REFERENCES PRACTICE(Id)," +

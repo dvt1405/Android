@@ -41,12 +41,6 @@ public class Guide_PracticeDAO extends DBManager {
     public Guide_Practice getGuide_PracticeById(int idGuide, int idPractice) {
         try {
             SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-            Cursor cursor = sqLiteDatabase.query(TABLE_NAME, new String[]{COLUMN_IDGUIDE, COLUMN_IDPRACTICE},
-                    COLUMN_IDGUIDE + "=?"+" AND "+ COLUMN_IDPRACTICE + "=?",
-                    new String[]{String.valueOf(idGuide), String.valueOf(idPractice)},
-                    null, null, null
-            );
-            if (cursor != null) cursor.moveToFirst();
             return new Guide_Practice(new PracticeDAO(context).getPracticeById(idPractice), new GuideDAO(context).getGuideDatabaseById(idGuide));
         } catch (Exception e) {
             Log.e("Err: ", e.getMessage());
@@ -68,6 +62,7 @@ public class Guide_PracticeDAO extends DBManager {
                     listPractice_Guide.add(practice_guide);
                 } while (cursor.moveToNext());
             }
+            cursor.close();
             return listPractice_Guide;
         } catch (Exception ex) {
             Log.e("Err: ", ex.getMessage());
@@ -88,6 +83,7 @@ public class Guide_PracticeDAO extends DBManager {
                     listGuide.add(guide);
                 } while (cursor.moveToNext());
             }
+            cursor.close();
             return listGuide;
         } catch (Exception ex) {
             Log.e("Err: ", ex.getMessage());
