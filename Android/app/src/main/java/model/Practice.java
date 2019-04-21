@@ -8,18 +8,17 @@ public class Practice implements Serializable {
     private String name;
     private List<Guide> listGuide;
     private String description;
+
     public Practice() {
     }
 
-    public Practice(String name,List<Guide> listGuide,int avatar, String description) {
+    public Practice(int id, String name, int avatar, String description) {
         this.avatar = avatar;
         this.name = name;
-        this.listGuide = listGuide;
         this.description = description;
     }
 
-    public Practice(int id, int avatar, String name, List<Guide> listGuide, String description) {
-        this.id = id;
+    public Practice(String name, List<Guide> listGuide, int avatar, String description) {
         this.avatar = avatar;
         this.name = name;
         this.listGuide = listGuide;

@@ -7,13 +7,12 @@ public class PracticeGroup implements Serializable {
     private int id,avatar;
     private String name;
     private List<Practice> listPractice;
-    private String desciption;
+    private String description;
 
-    public PracticeGroup(String name, int avatar, List<Practice> listPractice, String desciption) {
+    public PracticeGroup(int id, String name, int avatar, String desciption) {
         this.name = name;
         this.avatar = avatar;
-        this.listPractice = listPractice;
-        this.desciption = desciption;
+        this.description = desciption;
     }
 
     public PracticeGroup(int id, String name, int avatar, List<Practice> listPractice, String desciption) {
@@ -21,7 +20,7 @@ public class PracticeGroup implements Serializable {
         this.name = name;
         this.avatar = avatar;
         this.listPractice = listPractice;
-        this.desciption = desciption;
+        this.description = desciption;
     }
 
     public PracticeGroup() {
@@ -51,12 +50,12 @@ public class PracticeGroup implements Serializable {
         this.listPractice = listPractice;
     }
 
-    public String getDesciption() {
-        return desciption;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesciption(String desciption) {
-        this.desciption = desciption;
+    public void setDescription(String desciption) {
+        this.description = desciption;
     }
 
     public int getId() {

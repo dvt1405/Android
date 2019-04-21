@@ -68,40 +68,40 @@ public class Fragment_HomeScreen extends Fragment {
         this.listPracticeGroup = new ArrayList<>();
         this.linearLayout = view.findViewById(R.id.linerLayoutFragmentHomesSreen);
         //-----Data-Test------
-        Guide guid1 = new Guide("Guide 1", 2, "");
-        Guide guid2 = new Guide("Guide 2", 2, "");
-        List<Guide> listGuid1 = new ArrayList<>();
-        List<Guide> listGuid2 = new ArrayList<>();
-        List<Guide> listGuid3 = new ArrayList<>();
-
-        listGuid1.add(guid1);
-        listGuid1.add(guid2);
-        listGuid2.add(guid2);
-        listGuid2.add(guid2);
-        listGuid3.add(guid2);
-        listGuid3.add(guid1);
-        listGuid3.add(guid2);
-
-        Practice practice1 = new Practice("Practice 1",listGuid1,2,"");
-        Practice practice2 = new Practice("Practice 2",listGuid2,2,"");
-        Practice practice3 = new Practice("Practice 3",listGuid3,2,"");
-        List<Practice> listPracetice1 = new ArrayList<>();
-        List<Practice> listPracetice2 = new ArrayList<>();
-        List<Practice> listPracetice3 = new ArrayList<>();
-        listPracetice1.add(practice1);
-        listPracetice1.add(practice3);
-        listPracetice2.add(practice1);
-        listPracetice2.add(practice2);
-        listPracetice2.add(practice3);
-        listPracetice3.add(practice3);
-
-        PracticeGroup practiceGroup1 = new PracticeGroup("Group 1",1,listPracetice1,"" );
-        PracticeGroup practiceGroup2 = new PracticeGroup("Group 2",1,listPracetice2,"" );
-        PracticeGroup practiceGroup3 = new PracticeGroup("Group 3",1,listPracetice3,"" );
-        this.listPracticeGroup.add(practiceGroup1);
-        this.listPracticeGroup.add(practiceGroup2);
-        this.listPracticeGroup.add(practiceGroup3);
-        this.listPracticeGroup.add(practiceGroup1);
+//        Guide guid1 = new Guide("Guide 1", 2, "");
+//        Guide guid2 = new Guide("Guide 2", 2, "");
+//        List<Guide> listGuid1 = new ArrayList<>();
+//        List<Guide> listGuid2 = new ArrayList<>();
+//        List<Guide> listGuid3 = new ArrayList<>();
+//
+//        listGuid1.add(guid1);
+//        listGuid1.add(guid2);
+//        listGuid2.add(guid2);
+//        listGuid2.add(guid2);
+//        listGuid3.add(guid2);
+//        listGuid3.add(guid1);
+//        listGuid3.add(guid2);
+//
+//        Practice practice1 = new Practice("Practice 1",listGuid1,2,"");
+//        Practice practice2 = new Practice("Practice 2",listGuid2,2,"");
+//        Practice practice3 = new Practice("Practice 3",listGuid3,2,"");
+//        List<Practice> listPracetice1 = new ArrayList<>();
+//        List<Practice> listPracetice2 = new ArrayList<>();
+//        List<Practice> listPracetice3 = new ArrayList<>();
+//        listPracetice1.add(practice1);
+//        listPracetice1.add(practice3);
+//        listPracetice2.add(practice1);
+//        listPracetice2.add(practice2);
+//        listPracetice2.add(practice3);
+//        listPracetice3.add(practice3);
+//
+//        PracticeGroup practiceGroup1 = new PracticeGroup("Group 1",1,listPracetice1,"" );
+//        PracticeGroup practiceGroup2 = new PracticeGroup("Group 2",1,listPracetice2,"" );
+//        PracticeGroup practiceGroup3 = new PracticeGroup("Group 3",1,listPracetice3,"" );
+//        this.listPracticeGroup.add(practiceGroup1);
+//        this.listPracticeGroup.add(practiceGroup2);
+//        this.listPracticeGroup.add(practiceGroup3);
+//        this.listPracticeGroup.add(practiceGroup1);
     }
 
 
