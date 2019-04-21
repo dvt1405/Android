@@ -57,7 +57,6 @@ public class FragmentListPractice extends Fragment {
 
     }
 
-
     private AdapterView.OnItemClickListener onItemClicked() {
         final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         return new AdapterView.OnItemClickListener() {
