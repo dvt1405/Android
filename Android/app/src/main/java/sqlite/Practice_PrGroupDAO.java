@@ -14,7 +14,7 @@ import model.PracticeGroup;
 import model.Practice_PrGroup;
 
 public class Practice_PrGroupDAO extends DBManager {
-    private static final String TABLE_NAME = "Guide";
+    private static final String TABLE_NAME = "PRACTICE_PRGROUP";
     private static final String COLUMN_IDPRACTICEGROUP = "IdPracticegroup";
     private static final String COLUMN_IDPRACTICE = "IdPractice";
     private Context context;
@@ -77,7 +77,7 @@ public class Practice_PrGroupDAO extends DBManager {
         try {
             List<Practice> listPractice = new ArrayList<>();
             SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-            Cursor cursor = sqLiteDatabase.query(TABLE_NAME, new String[]{COLUMN_IDPRACTICEGROUP},
+            Cursor cursor = sqLiteDatabase.query(TABLE_NAME, new String[]{COLUMN_IDPRACTICEGROUP, COLUMN_IDPRACTICE},
                     COLUMN_IDPRACTICEGROUP + "=?",
                     new String[]{String.valueOf(id)},
                     null, null, null);

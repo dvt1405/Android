@@ -21,9 +21,14 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import model.Practice;
 import model.PracticeAdapter;
 import model.PracticeGroup;
+import model.Practice_PrGroup;
+import sqlite.Practice_PrGroupDAO;
 
 public class FragmentListPractice extends Fragment {
     private ListView listView;
@@ -31,6 +36,8 @@ public class FragmentListPractice extends Fragment {
     private ImageButton buttonBack;
     private TextView textView;
     private CollapsingToolbarLayout toolbarLayout;
+    private Practice_PrGroupDAO practice_prGroupDAO;
+    private List<Practice> listPractice;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -41,7 +48,8 @@ public class FragmentListPractice extends Fragment {
         if (getPracticeGroup != null) {
             practiceGroup = (PracticeGroup) getPracticeGroup.getSerializable("practicegroup");
             textView.setText(practiceGroup.getName());
-            listView.setAdapter(new PracticeAdapter(practiceGroup.getListPractice(), container.getContext(), R.layout.item_listview_homescreen));
+            listPractice = practice_prGroupDAO.getListPracticeByIdGroup(practiceGroup.getId());
+            listView.setAdapter(new PracticeAdapter(listPractice, container.getContext(), R.layout.item_listview_homescreen));
             listView.setOnItemClickListener(onItemClicked());
         }
 
@@ -54,7 +62,8 @@ public class FragmentListPractice extends Fragment {
         toolbarLayout = view.findViewById(R.id.toolbarListPractice);
         buttonBack = toolbarLayout.findViewById(R.id.buttonToolbar);
         textView = toolbarLayout.findViewById(R.id.textToolbar);
-
+        listPractice = new ArrayList<>();
+        practice_prGroupDAO = new Practice_PrGroupDAO(getActivity().getBaseContext());
     }
 
     private AdapterView.OnItemClickListener onItemClicked() {
@@ -64,7 +73,7 @@ public class FragmentListPractice extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 FragmentGuidePractice fragmentGuidePractice = new FragmentGuidePractice();
                 Bundle sendPractice = new Bundle();
-                sendPractice.putSerializable("practice", practiceGroup.getListPractice().get(i));
+                sendPractice.putSerializable("practice", listPractice.get(i));
                 fragmentGuidePractice.setArguments(sendPractice);
                 fragmentTransaction.replace(R.id.frameLayoutMainActivity, fragmentGuidePractice);
                 fragmentTransaction.addToBackStack("backStackListPractice");

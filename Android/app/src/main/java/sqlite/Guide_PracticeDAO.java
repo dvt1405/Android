@@ -15,7 +15,7 @@ import model.Guide_Practice;
 import model.Practice;
 
 public class Guide_PracticeDAO extends DBManager {
-    private static final String TABLE_NAME = "Guide";
+    private static final String TABLE_NAME = "GUIDE_PRACTICE";
     private static final String COLUMN_IDGUIDE = "IdGuide";
     private static final String COLUMN_IDPRACTICE = "IdPractice";
     private Context context;

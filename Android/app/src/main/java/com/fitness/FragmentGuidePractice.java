@@ -23,10 +23,14 @@ import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import model.Guide;
 import model.Practice;
 import model.TestPlayMusicThread;
+import sqlite.Guide_PracticeDAO;
 
 public class FragmentGuidePractice extends Fragment {
     private TextView textView;
@@ -39,6 +43,8 @@ public class FragmentGuidePractice extends Fragment {
     private Button buttonPause;
     private Handler handler = new Handler();
     private TextView textViewTimer;
+    private List<Guide> listGuide;
+
     private boolean isPlaying;
     TestPlayMusicThread testPlayMusicThread;
 
@@ -48,10 +54,13 @@ public class FragmentGuidePractice extends Fragment {
         View view = inflater.inflate(R.layout.fragment_guide_practice, container, false);
         initView(view);
         Bundle getPractice = getArguments();
+
         Practice practice = (Practice) getPractice.getSerializable("practice");
+        listGuide = new Guide_PracticeDAO(getActivity().getBaseContext()).getListGuideByIdPractice(practice.getId());
         textView.setText(practice.getName());
 
         backButton.setOnClickListener(onButtonBackCliked);
+
         //-----------Play Music---------------
         int idsong = R.raw.dancetheduc;
         mediaPlayer = MediaPlayer.create(container.getContext(), idsong);
@@ -76,6 +85,8 @@ public class FragmentGuidePractice extends Fragment {
         seekBar = view.findViewById(R.id.seekBar);
         buttonStart = view.findViewById(R.id.buttonStart);
         buttonPause = view.findViewById(R.id.buttonStop);
+        listGuide = new ArrayList<>();
+
         textViewTimer = view.findViewById(R.id.textTime);
         isPlaying = false;
     }

@@ -55,8 +55,23 @@ public class PracticeGroupDAO extends DBManager {
         }
         return null;
     }
+    public PracticeGroup getPracticeGroupByName(String name) {
+        try {
+            SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+            Cursor cursor = sqLiteDatabase.query(TABLE_NAME, new String[]{COLUMN_ID, COLUMN_NAME, COLUMN_AVATAR, COLUMN_DESCIPTION},
+                    COLUMN_NAME + "=?", new String[]{String.valueOf(name)}, null, null, null
+            );
+            if (cursor != null) cursor.moveToFirst();
+            PracticeGroup practiceGroup = new PracticeGroup(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getString(3));
+            sqLiteDatabase.close();
+            return practiceGroup;
+        } catch (Exception e) {
+            Log.e("Err", e.getMessage());
+        }
+        return null;
+    }
 
-    public List<PracticeGroup> getAllPractice() {
+    public List<PracticeGroup> getAllPracticeGroup() {
         String sql = "SELECT * FROM " + TABLE_NAME;
         try {
             List<PracticeGroup> listPracticeGroup = new ArrayList<>();

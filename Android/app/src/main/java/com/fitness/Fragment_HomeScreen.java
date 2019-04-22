@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,17 +21,23 @@ import java.util.List;
 
 import model.Guide;
 import model.GuideAdapter;
+import model.Guide_Practice;
 import model.Practice;
+import model.PracticeAdapter;
 import model.PracticeGroup;
 import model.PracticeGroupAdapter;
+import model.Practice_PrGroup;
 import sqlite.DBManager;
+import sqlite.GuideDAO;
+import sqlite.Guide_PracticeDAO;
+import sqlite.PracticeDAO;
 import sqlite.PracticeGroupDAO;
+import sqlite.Practice_PrGroupDAO;
 
 public class Fragment_HomeScreen extends Fragment {
     private List<PracticeGroup> listPracticeGroup;
     private ListView listView;
     private LinearLayout linearLayout;
-
     TextView textView;
     @Nullable
     @Override
@@ -45,19 +52,21 @@ public class Fragment_HomeScreen extends Fragment {
         listView.setOnItemClickListener(onItemClicked(fragmentTransaction));
         return view;
     }
-    public View onReselected( LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+    public View onReselected(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_homesreen, container, false);
     }
-    private AdapterView.OnItemClickListener onItemClicked(final FragmentTransaction fragmentTransaction){
+
+    private AdapterView.OnItemClickListener onItemClicked(final FragmentTransaction fragmentTransaction) {
         return new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 FragmentListPractice fragmentListPractice = new FragmentListPractice();
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("practicegroup",listPracticeGroup.get(i));
+                bundle.putSerializable("practicegroup", listPracticeGroup.get(i));
                 bundle.putString("bundle", "bundle");
                 fragmentListPractice.setArguments(bundle);
-                fragmentTransaction.replace(R.id.frameLayoutMainActivity ,fragmentListPractice);
+                fragmentTransaction.replace(R.id.frameLayoutMainActivity, fragmentListPractice);
                 fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_ENTER_MASK);
                 fragmentTransaction.addToBackStack("backStackHomeScreen");
                 fragmentTransaction.commit();
@@ -70,42 +79,20 @@ public class Fragment_HomeScreen extends Fragment {
         this.listPracticeGroup = new ArrayList<>();
         this.linearLayout = view.findViewById(R.id.linerLayoutFragmentHomesSreen);
         PracticeGroupDAO dbManager = new PracticeGroupDAO(getActivity().getBaseContext());
-        listPracticeGroup = dbManager.getAllPractice();
-        //-----Data-Test------
-//        Guide guid1 = new Guide("Guide 1", 2, "");
-//        Guide guid2 = new Guide("Guide 2", 2, "");
-//        List<Guide> listGuid1 = new ArrayList<>();
-//        List<Guide> listGuid2 = new ArrayList<>();
-//        List<Guide> listGuid3 = new ArrayList<>();
-//
-//        listGuid1.add(guid1);
-//        listGuid1.add(guid2);
-//        listGuid2.add(guid2);
-//        listGuid2.add(guid2);
-//        listGuid3.add(guid2);
-//        listGuid3.add(guid1);
-//        listGuid3.add(guid2);
-//
-//        Practice practice1 = new Practice("Practice 1",listGuid1,2,"");
-//        Practice practice2 = new Practice("Practice 2",listGuid2,2,"");
-//        Practice practice3 = new Practice("Practice 3",listGuid3,2,"");
-//        List<Practice> listPracetice1 = new ArrayList<>();
-//        List<Practice> listPracetice2 = new ArrayList<>();
-//        List<Practice> listPracetice3 = new ArrayList<>();
-//        listPracetice1.add(practice1);
-//        listPracetice1.add(practice3);
-//        listPracetice2.add(practice1);
-//        listPracetice2.add(practice2);
-//        listPracetice2.add(practice3);
-//        listPracetice3.add(practice3);
-//
-//        PracticeGroup practiceGroup1 = new PracticeGroup("Group 1",1,listPracetice1,"" );
-//        PracticeGroup practiceGroup2 = new PracticeGroup("Group 2",1,listPracetice2,"" );
-//        PracticeGroup practiceGroup3 = new PracticeGroup("Group 3",1,listPracetice3,"" );
-//        this.listPracticeGroup.add(practiceGroup1);
-//        this.listPracticeGroup.add(practiceGroup2);
-//        this.listPracticeGroup.add(practiceGroup3);
-//        this.listPracticeGroup.add(practiceGroup1);
+        listPracticeGroup = dbManager.getAllPracticeGroup();
+
+
+//        List<Practice> practiceList = new PracticeDAO(getActivity().getBaseContext()).getAllPractice();
+//        List<Guide> guideList = new GuideDAO(getActivity().getBaseContext()).getAllGuideDataBase();
+//        new Practice_PrGroupDAO(getActivity().getBaseContext()).addPractice_PrGroup(new Practice_PrGroup(practiceList.get(1),listPracticeGroup.get(0)));
+//        new Practice_PrGroupDAO(getActivity().getBaseContext()).addPractice_PrGroup(new Practice_PrGroup(practiceList.get(2),listPracticeGroup.get(0)));
+//        new Practice_PrGroupDAO(getActivity().getBaseContext()).addPractice_PrGroup(new Practice_PrGroup(practiceList.get(3),listPracticeGroup.get(1)));
+//        new Practice_PrGroupDAO(getActivity().getBaseContext()).addPractice_PrGroup(new Practice_PrGroup(practiceList.get(4),listPracticeGroup.get(3)));
+//        Guide_PracticeDAO guide_practiceDAO = new Guide_PracticeDAO(getActivity().getBaseContext());
+//        guide_practiceDAO.addGuide_Practice(new Guide_Practice(practiceList.get(1),guideList.get(3)));
+//        guide_practiceDAO.addGuide_Practice(new Guide_Practice(practiceList.get(2),guideList.get(2)));
+//        guide_practiceDAO.addGuide_Practice(new Guide_Practice(practiceList.get(3),guideList.get(1)));
+//        guide_practiceDAO.addGuide_Practice(new Guide_Practice(practiceList.get(4),guideList.get(6)));
     }
 
 
