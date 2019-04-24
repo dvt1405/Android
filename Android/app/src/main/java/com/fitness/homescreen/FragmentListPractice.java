@@ -81,6 +81,7 @@ public class FragmentListPractice extends Fragment {
             @Override
             public void onClick(View view) {
                 getFragmentManager().popBackStack("backStackHomeScreen",1);
+                getFragmentManager().popBackStack("backStackCustomwork",1);
             }
         };
     }

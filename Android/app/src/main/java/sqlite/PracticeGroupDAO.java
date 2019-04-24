@@ -22,6 +22,7 @@ public class PracticeGroupDAO extends DBManager {
     private static final String COLUMN_NAME = "Name";
     private static final String COLUMN_AVATAR = "Avatar";
     private static final String COLUMN_DESCIPTION = "Description";
+    private static final String COLUMN_LOCK = "Locked";
     private Context context;
     public PracticeGroupDAO(Context context) {
         super(context);
@@ -33,10 +34,17 @@ public class PracticeGroupDAO extends DBManager {
             PracticeGroup pg2 = new PracticeGroup("Cơ vai", R.drawable.plank,"Bài tập cơ tay");
             PracticeGroup pg3 = new PracticeGroup("Cơ ngực", R.drawable.chongday,"Bài tập cơ tay");
             PracticeGroup pg4 = new PracticeGroup("Cơ chân", R.drawable.nang_chan,"Bài tập cơ tay");
+            PracticeGroup pg5 = new PracticeGroup("Tổng hợp 1", R.drawable.jumpsquat,"Bài tập cơ tay");
+            pg1.setLocked(0);
+            pg2.setLocked(0);
+            pg3.setLocked(0);
+            pg4.setLocked(0);
+            pg5.setLocked(1);
             this.addPracticeGroup(pg1);
             this.addPracticeGroup(pg2);
             this.addPracticeGroup(pg3);
             this.addPracticeGroup(pg4);
+            this.addPracticeGroup(pg5);
         }
     }
     public int getPracticeGroupDatabaseCount() {
@@ -61,6 +69,7 @@ public class PracticeGroupDAO extends DBManager {
             contentValues.put(COLUMN_NAME, practice.getName());
             contentValues.put(COLUMN_AVATAR, practice.getAvatar());
             contentValues.put(COLUMN_DESCIPTION, practice.getDescription());
+            contentValues.put(COLUMN_LOCK, practice.getLocked());
             sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
             Log.e("Run to here: ", "add done");
             sqLiteDatabase.close();
@@ -103,7 +112,7 @@ public class PracticeGroupDAO extends DBManager {
     }
 
     public List<PracticeGroup> getAllPracticeGroup() {
-        String sql = "SELECT * FROM " + TABLE_NAME+" WHERE "+COLUMN_DESCIPTION+" != 'custom'";
+        String sql = "SELECT * FROM " + TABLE_NAME+" WHERE "+COLUMN_DESCIPTION+" != 'custom' AND "+COLUMN_LOCK+"=0";
         try {
             List<PracticeGroup> listPracticeGroup = new ArrayList<>();
             try {
@@ -129,7 +138,36 @@ public class PracticeGroupDAO extends DBManager {
             Log.e("Err: ", e.getMessage());
         }
         return null;
-    }public List<PracticeGroup> getAllCustom() {
+    }
+    public List<PracticeGroup> getAllPracticeGroupLocked() {
+        String sql = "SELECT * FROM " + TABLE_NAME+" WHERE "+COLUMN_DESCIPTION+" != 'custom' AND "+COLUMN_LOCK+"=1";
+        try {
+            List<PracticeGroup> listPracticeGroup = new ArrayList<>();
+            try {
+                SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+                Cursor cursor = sqLiteDatabase.rawQuery(sql, null);
+                if (cursor.moveToFirst()) {
+                    do {
+                        PracticeGroup practiceGroup = new PracticeGroup();
+                        practiceGroup.setId(cursor.getInt(0));
+                        practiceGroup.setName(cursor.getString(1));
+                        practiceGroup.setAvatar(cursor.getInt(2));
+                        practiceGroup.setDescription(cursor.getString(3));
+                        listPracticeGroup.add(practiceGroup);
+                    } while (cursor.moveToNext());
+                    cursor.close();
+                    sqLiteDatabase.close();
+                }
+            } catch (Exception ex) {
+
+            }
+            return listPracticeGroup;
+        } catch (Exception e) {
+            Log.e("Err: ", e.getMessage());
+        }
+        return null;
+    }
+    public List<PracticeGroup> getAllCustom() {
         String sql = "SELECT * FROM " + TABLE_NAME+" WHERE "+COLUMN_DESCIPTION+" = 'custom'";
         try {
             List<PracticeGroup> listPracticeGroup = new ArrayList<>();

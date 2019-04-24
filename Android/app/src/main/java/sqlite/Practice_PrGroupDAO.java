@@ -137,4 +137,21 @@ public class Practice_PrGroupDAO extends DBManager {
             Log.e("Err: ", ex.getMessage());
         }
     }
+    public void deleteByIdGroup(int id) {
+        try{
+            SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+            List<Practice> practiceList = this.getListPracticeByIdGroup(id);
+            Log.e("SIZE DELETE", practiceList.size()+"");
+            for(int i=0; i<practiceList.size();i++) {
+                Log.e("ID DELETE", i+"");
+                sqLiteDatabase.delete(TABLE_NAME,
+                        COLUMN_IDPRACTICEGROUP + "=?"+" AND "+ COLUMN_IDPRACTICE + "=?",
+                        new String[]{String.valueOf(id),String.valueOf(practiceList.get(i).getId())});
+                sqLiteDatabase.close();
+            }
+            sqLiteDatabase.close();
+        }catch (Exception ex){
+
+        }
+    }
 }

@@ -45,7 +45,6 @@ public class Fragment_HomeScreen extends Fragment {
         initView(view);
         //------------Set adapter-----------
         final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-
         PracticeGroupAdapter adapter = new PracticeGroupAdapter(listPracticeGroup, container.getContext(), R.layout.item_listview_homescreen);
         listView.setAdapter(adapter);
         //-------------Click an item------------------

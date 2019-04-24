@@ -29,7 +29,8 @@ public class DBManager extends SQLiteOpenHelper {
             "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
             "Name VARCHAR(200)," +
             "Avatar INTEGER," +
-            "Description VARCHAR(200)" +
+            "Description VARCHAR(200)," +
+            "Locked INTEGER" +
             ")";
     private static final String CREATE_PRACTICE_TABLE = "CREATE TABLE IF NOT EXISTS PRACTICE(" +
             "Id INTEGER PRIMARY KEY AUTOINCREMENT," +

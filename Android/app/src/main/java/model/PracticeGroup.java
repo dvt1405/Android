@@ -9,6 +9,8 @@ public class PracticeGroup implements Serializable {
     private String name;
     private List<Practice> listPractice;
     private String description;
+    private int locked;
+
 
     public PracticeGroup(int id, String name, int avatar, String desciption) {
         this.id=id;
@@ -16,6 +18,7 @@ public class PracticeGroup implements Serializable {
         this.avatar = avatar;
         this.description = desciption;
         listPractice = new ArrayList<>();
+        locked = 0;
     }
 
     public PracticeGroup(String name, int avatar, String desciption) {
@@ -25,6 +28,7 @@ public class PracticeGroup implements Serializable {
         this.listPractice = listPractice;
         this.description = desciption;
         listPractice = new ArrayList<>();
+        locked= 0;
     }
 
     public PracticeGroup() {
@@ -69,5 +73,13 @@ public class PracticeGroup implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getLocked() {
+        return locked;
+    }
+
+    public void setLocked(int locked) {
+        this.locked = locked;
     }
 }
