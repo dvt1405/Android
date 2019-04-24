@@ -12,12 +12,11 @@ public class Practice implements Serializable {
     public Practice() {
     }
 
-    public Practice(int id, String name, int avatar, String description) {
+    public Practice(String name, int avatar, String description) {
         this.avatar = avatar;
         this.name = name;
         this.description = description;
     }
-
     public Practice(String name, List<Guide> listGuide, int avatar, String description) {
         this.avatar = avatar;
         this.name = name;

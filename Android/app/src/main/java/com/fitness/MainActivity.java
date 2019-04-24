@@ -1,28 +1,21 @@
 package com.fitness;
 
-import android.media.ImageWriter;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.fitness.customwork.Fragment_CustomWorkScreen;
+import com.fitness.homescreen.Fragment_HomeScreen;
 
-import model.PracticeGroup;
-import sqlite.DBManager;
+import sqlite.GuideDAO;
+import sqlite.PracticeDAO;
 import sqlite.PracticeGroupDAO;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,6 +35,11 @@ public class MainActivity extends AppCompatActivity {
         navigationBottom = getSupportActionBar();
         navigationView = findViewById(R.id.bottomNavigation);
         frameLayout = findViewById(R.id.frameLayoutMainActivity);
+
+        //create Dèault data
+        new GuideDAO(getBaseContext()).onCreateDefaultGuideDatabase();
+        new PracticeDAO(this.getBaseContext()).createDefaultDataPractice();
+        new PracticeGroupDAO(this.getBaseContext()).createDefaultGroupData();
         loadFragmentt(new Fragment_HomeScreen());
     }
 
@@ -78,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
     public void loadFragmentt(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frameLayoutMainActivity, fragment);
+        fragmentTransaction.addToBackStack(fragment.getTag());
+
         fragmentTransaction.commit();
     }
 
@@ -85,4 +85,5 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
     }
+
 }

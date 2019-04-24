@@ -23,7 +23,20 @@ public class Practice_PrGroupDAO extends DBManager {
         super(context);
         this.context = context;
     }
-
+    public int getGroup_PracticeDatabaseCount() {
+        try {
+            String query = "SELECT * FROM " + TABLE_NAME;
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery(query, null);
+            int count = cursor.getCount();
+            cursor.close();
+            db.close();
+            return count;
+        } catch (Exception ex) {
+            Log.e("Err: ", ex.getMessage());
+        }
+        return 0;
+    }
     public void addPractice_PrGroup(Practice_PrGroup practice) {
         try {
             SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
@@ -67,6 +80,8 @@ public class Practice_PrGroupDAO extends DBManager {
                     listPractice_PrGroup.add(practice_prGroup);
                 } while (cursor.moveToNext());
             }
+            cursor.close();
+            sqLiteDatabase.close();
             return listPractice_PrGroup;
         } catch (Exception ex) {
             Log.e("Err: ", ex.getMessage());
@@ -87,6 +102,8 @@ public class Practice_PrGroupDAO extends DBManager {
                     listPractice.add(practice);
                 } while (cursor.moveToNext());
             }
+            cursor.close();
+            sqLiteDatabase.close();
             return listPractice;
         } catch (Exception ex) {
             Log.e("Err: ", ex.getMessage());
@@ -103,6 +120,7 @@ public class Practice_PrGroupDAO extends DBManager {
                     COLUMN_IDPRACTICEGROUP + "=?"+" AND "+ COLUMN_IDPRACTICE + "=?",
                     new String[]{String.valueOf(practice_prGroup.getPracticeGroup().getId()),String.valueOf(practice_prGroup.getPractice().getId())});
             Log.d("Updated: ", update + "");
+            sqLiteDatabase.close();
         } catch (Exception ex) {
             Log.e("Err:", ex.getMessage());
         }

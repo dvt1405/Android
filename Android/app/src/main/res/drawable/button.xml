@@ -13,7 +13,7 @@
             <solid android:color="#c20586"></solid>
             <stroke
                 android:width="0.5dp"
-                android:color="@color/colorPrimaryDark"
+                android:color="#F26419"
                 />
             <gradient
                 android:startColor="#F26419"

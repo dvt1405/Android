@@ -27,7 +27,14 @@
             android:gravity="center"
             android:text="Time"
             android:textSize="40sp" />
-
+        <ViewFlipper
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/textTime"
+            android:layout_above="@+id/seekBar"
+            android:id="@+id/viewFlipper"
+            >
+        </ViewFlipper>
         <SeekBar
             android:id="@+id/seekBar"
             android:layout_width="match_parent"
@@ -63,7 +70,7 @@
             />
 
         <Button
-            android:id="@+id/buttonStop"
+            android:id="@+id/buttonNext"
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_toRightOf="@+id/buttonStart"

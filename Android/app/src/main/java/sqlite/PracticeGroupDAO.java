@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.fitness.R;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -25,7 +27,33 @@ public class PracticeGroupDAO extends DBManager {
         super(context);
         this.context = context;
     }
+    public void createDefaultGroupData(){
+        if(this.getPracticeGroupDatabaseCount()==0) {
+            PracticeGroup pg1 = new PracticeGroup("Cơ tay", R.drawable.co_tay_truoc,"Bài tập cơ tay");
+            PracticeGroup pg2 = new PracticeGroup("Cơ vai", R.drawable.plank,"Bài tập cơ tay");
+            PracticeGroup pg3 = new PracticeGroup("Cơ ngực", R.drawable.chongday,"Bài tập cơ tay");
+            PracticeGroup pg4 = new PracticeGroup("Cơ chân", R.drawable.nang_chan,"Bài tập cơ tay");
+            this.addPracticeGroup(pg1);
+            this.addPracticeGroup(pg2);
+            this.addPracticeGroup(pg3);
+            this.addPracticeGroup(pg4);
+        }
+    }
+    public int getPracticeGroupDatabaseCount() {
+        try {
+            String query = "SELECT * FROM " + TABLE_NAME;
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery(query, null);
+            int count = cursor.getCount();
 
+            cursor.close();
+            db.close();
+            return count;
+        } catch (Exception ex) {
+            Log.e("Err: ", ex.getMessage());
+        }
+        return 0;
+    }
     public void addPracticeGroup(PracticeGroup practice) {
         try {
             SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
@@ -34,7 +62,8 @@ public class PracticeGroupDAO extends DBManager {
             contentValues.put(COLUMN_AVATAR, practice.getAvatar());
             contentValues.put(COLUMN_DESCIPTION, practice.getDescription());
             sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
-            Log.e("Rung to here: ", "add done");
+            Log.e("Run to here: ", "add done");
+            sqLiteDatabase.close();
         } catch (Exception ex) {
             Log.e("Err: ", ex.getMessage());
         }
@@ -48,6 +77,7 @@ public class PracticeGroupDAO extends DBManager {
             );
             if (cursor != null) cursor.moveToFirst();
             PracticeGroup practiceGroup = new PracticeGroup(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getString(3));
+            cursor.close();
             sqLiteDatabase.close();
             return practiceGroup;
         } catch (Exception e) {
@@ -63,6 +93,7 @@ public class PracticeGroupDAO extends DBManager {
             );
             if (cursor != null) cursor.moveToFirst();
             PracticeGroup practiceGroup = new PracticeGroup(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getString(3));
+            cursor.close();
             sqLiteDatabase.close();
             return practiceGroup;
         } catch (Exception e) {
@@ -72,7 +103,7 @@ public class PracticeGroupDAO extends DBManager {
     }
 
     public List<PracticeGroup> getAllPracticeGroup() {
-        String sql = "SELECT * FROM " + TABLE_NAME;
+        String sql = "SELECT * FROM " + TABLE_NAME+" WHERE "+COLUMN_DESCIPTION+" != 'custom'";
         try {
             List<PracticeGroup> listPracticeGroup = new ArrayList<>();
             try {
@@ -87,6 +118,34 @@ public class PracticeGroupDAO extends DBManager {
                         practiceGroup.setDescription(cursor.getString(3));
                         listPracticeGroup.add(practiceGroup);
                     } while (cursor.moveToNext());
+                    cursor.close();
+                    sqLiteDatabase.close();
+                }
+            } catch (Exception ex) {
+
+            }
+            return listPracticeGroup;
+        } catch (Exception e) {
+            Log.e("Err: ", e.getMessage());
+        }
+        return null;
+    }public List<PracticeGroup> getAllCustom() {
+        String sql = "SELECT * FROM " + TABLE_NAME+" WHERE "+COLUMN_DESCIPTION+" = 'custom'";
+        try {
+            List<PracticeGroup> listPracticeGroup = new ArrayList<>();
+            try {
+                SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+                Cursor cursor = sqLiteDatabase.rawQuery(sql, null);
+                if (cursor.moveToFirst()) {
+                    do {
+                        PracticeGroup practiceGroup = new PracticeGroup();
+                        practiceGroup.setId(cursor.getInt(0));
+                        practiceGroup.setName(cursor.getString(1));
+                        practiceGroup.setAvatar(cursor.getInt(2));
+                        practiceGroup.setDescription(cursor.getString(3));
+                        listPracticeGroup.add(practiceGroup);
+                    } while (cursor.moveToNext());
+                    cursor.close();
                     sqLiteDatabase.close();
                 }
             } catch (Exception ex) {

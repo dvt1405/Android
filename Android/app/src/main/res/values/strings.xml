@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Fitness</string>
     <string name="icon_home">Home</string>
+    <string name="icon_custom">Custom Work</string>
+    <string name="icon_history">History</string>
+    <string name="icon_user">Profile</string>
+    <string name="custom_tab">Custom Work</string>
+
 </resources>

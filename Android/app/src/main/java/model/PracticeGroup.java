@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PracticeGroup implements Serializable {
@@ -10,9 +11,11 @@ public class PracticeGroup implements Serializable {
     private String description;
 
     public PracticeGroup(int id, String name, int avatar, String desciption) {
+        this.id=id;
         this.name = name;
         this.avatar = avatar;
         this.description = desciption;
+        listPractice = new ArrayList<>();
     }
 
     public PracticeGroup(String name, int avatar, String desciption) {
@@ -21,9 +24,11 @@ public class PracticeGroup implements Serializable {
         this.avatar = avatar;
         this.listPractice = listPractice;
         this.description = desciption;
+        listPractice = new ArrayList<>();
     }
 
     public PracticeGroup() {
+        listPractice = new ArrayList<>();
     }
 
     public String getName() {

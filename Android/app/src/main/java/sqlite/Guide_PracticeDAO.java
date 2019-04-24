@@ -24,7 +24,20 @@ public class Guide_PracticeDAO extends DBManager {
         super(context);
         this.context = context;
     }
-
+    public int getGuide_PracticeDatabaseCount() {
+        try {
+            String query = "SELECT * FROM " + TABLE_NAME;
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery(query, null);
+            int count = cursor.getCount();
+            cursor.close();
+            db.close();
+            return count;
+        } catch (Exception ex) {
+            Log.e("Err: ", ex.getMessage());
+        }
+        return 0;
+    }
     public void addGuide_Practice(Guide_Practice guide_practice) {
         try {
             SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
@@ -63,6 +76,7 @@ public class Guide_PracticeDAO extends DBManager {
                 } while (cursor.moveToNext());
             }
             cursor.close();
+            sqLiteDatabase.close();
             return listPractice_Guide;
         } catch (Exception ex) {
             Log.e("Err: ", ex.getMessage());
@@ -73,17 +87,18 @@ public class Guide_PracticeDAO extends DBManager {
         try {
             List<Guide> listGuide = new ArrayList<>();
             SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-            Cursor cursor = sqLiteDatabase.query(TABLE_NAME, new String[]{COLUMN_IDPRACTICE},
+            Cursor cursor = sqLiteDatabase.query(TABLE_NAME, new String[]{COLUMN_IDPRACTICE,COLUMN_IDGUIDE},
                     COLUMN_IDPRACTICE + "=?",
                     new String[]{String.valueOf(id)},
                     null, null, null);
             if (cursor.moveToFirst()) {
                 do {
-                    Guide guide = new GuideDAO(context).getGuideDatabaseById(cursor.getInt(0));
+                    Guide guide = new GuideDAO(context).getGuideDatabaseById(cursor.getInt(1));
                     listGuide.add(guide);
                 } while (cursor.moveToNext());
             }
             cursor.close();
+            sqLiteDatabase.close();
             return listGuide;
         } catch (Exception ex) {
             Log.e("Err: ", ex.getMessage());
@@ -99,6 +114,7 @@ public class Guide_PracticeDAO extends DBManager {
             int update = sqLiteDatabase.update(TABLE_NAME, contentValues,
                     COLUMN_IDGUIDE + "=?"+" AND "+ COLUMN_IDPRACTICE + "=?",
                     new String[]{String.valueOf(guide_practice.getGuide().getId()),String.valueOf(guide_practice.getPractice().getId())});
+            sqLiteDatabase.close();
             Log.d("Updated: ", update + "");
         } catch (Exception ex) {
             Log.e("Err:", ex.getMessage());

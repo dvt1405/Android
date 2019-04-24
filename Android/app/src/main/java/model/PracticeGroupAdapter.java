@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fitness.R;
@@ -43,8 +44,10 @@ public class PracticeGroupAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(layout,null);
         TextView textViewNameItem = view.findViewById(R.id.nameItemListView);
+        ImageView imageView = view.findViewById(R.id.imageViewItem);
         PracticeGroup  practiceGroup = listPracticeGroup.get(i);
         textViewNameItem.setText(practiceGroup.getName());
+        imageView.setImageResource(practiceGroup.getAvatar());
         return view;
     }
 }

@@ -1,4 +1,4 @@
-package com.fitness;
+package com.fitness.homescreen;
 
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -14,14 +14,22 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
+
+import com.fitness.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +40,7 @@ import model.Practice;
 import model.TestPlayMusicThread;
 import sqlite.Guide_PracticeDAO;
 
-public class FragmentGuidePractice extends Fragment {
+public class FragmentGuidePractice extends Fragment{
     private TextView textView;
     private CollapsingToolbarLayout toolbarLayout;
     private ImageButton backButton;
@@ -40,32 +48,52 @@ public class FragmentGuidePractice extends Fragment {
     private MediaPlayer mediaPlayer;
     private SeekBar seekBar;
     private Button buttonStart;
-    private Button buttonPause;
+    private Button buttonNext;
+    private Button buttonPrevious;
     private Handler handler = new Handler();
     private TextView textViewTimer;
     private List<Guide> listGuide;
-
+    private ViewFlipper viewFlipper;
+    private ImageView imageView;
     private boolean isPlaying;
+
+    private int currentIndexImage = 0;
     TestPlayMusicThread testPlayMusicThread;
 
+    private Animation in, out;
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)  {
         View view = inflater.inflate(R.layout.fragment_guide_practice, container, false);
         initView(view);
         Bundle getPractice = getArguments();
 
         Practice practice = (Practice) getPractice.getSerializable("practice");
-        listGuide = new Guide_PracticeDAO(getActivity().getBaseContext()).getListGuideByIdPractice(practice.getId());
+        listGuide = new Guide_PracticeDAO(container.getContext()).getListGuideByIdPractice(practice.getId());
         textView.setText(practice.getName());
-
+        Log.e("Size: ",""+listGuide.size());
+        for(int i=0; i<listGuide.size();i++) {
+            ImageView imageView = new ImageView(container.getContext());
+            imageView.setImageResource(listGuide.get(i).getImage());
+            viewFlipper.addView(imageView);
+        }
         backButton.setOnClickListener(onButtonBackCliked);
-
+        buttonNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewFlipper.showNext();
+            }
+        });
+        buttonPrevious.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewFlipper.showPrevious();
+            }
+        });
         //-----------Play Music---------------
         int idsong = R.raw.dancetheduc;
         mediaPlayer = MediaPlayer.create(container.getContext(), idsong);
         buttonStart.setOnClickListener(onButtonStartClicked);
-        buttonPause.setOnClickListener(onButtonPauseClicked);
         seekBar.setOnSeekBarChangeListener(onSeekBarChanged);
         if(savedInstanceState!=null){
             String time = savedInstanceState.getString("time");
@@ -83,12 +111,21 @@ public class FragmentGuidePractice extends Fragment {
         textView = toolbarLayout.findViewById(R.id.textToolbar);
         backButton = toolbarLayout.findViewById(R.id.buttonToolbar);
         seekBar = view.findViewById(R.id.seekBar);
+
         buttonStart = view.findViewById(R.id.buttonStart);
-        buttonPause = view.findViewById(R.id.buttonStop);
+        buttonNext = view.findViewById(R.id.buttonNext);
+        buttonPrevious = view.findViewById(R.id.buttonPrevius);
+
         listGuide = new ArrayList<>();
+        viewFlipper = view.findViewById(R.id.viewFlipper);
 
         textViewTimer = view.findViewById(R.id.textTime);
         isPlaying = false;
+
+        in = AnimationUtils.loadAnimation(getActivity().getBaseContext(),R.anim.in_from_left) ;
+        out = AnimationUtils.loadAnimation(getActivity().getBaseContext(),R.anim.out_from_left) ;
+        viewFlipper.setInAnimation(in);
+        viewFlipper.setOutAnimation(out);
     }
 
     public String millisecondToString(int milli) {
@@ -134,13 +171,6 @@ public class FragmentGuidePractice extends Fragment {
             }
         }
     };
-    private View.OnClickListener onButtonPauseClicked
-            = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            mediaPlayer.pause();
-        }
-    };
     private SeekBar.OnSeekBarChangeListener onSeekBarChanged
             = new SeekBar.OnSeekBarChangeListener() {
         @Override
@@ -166,7 +196,6 @@ public class FragmentGuidePractice extends Fragment {
         super.onSaveInstanceState(outState);
         outState.putString("time", testPlayMusicThread.getMediaPlayer().getCurrentPosition()+"");
         Log.e("Saved state:", "OK");
-        this.setArguments(outState);
     }
 
     @Override
@@ -176,7 +205,12 @@ public class FragmentGuidePractice extends Fragment {
         String time = savedInstanceState.getString("time");
         seekBar.setProgress(Integer.parseInt(time));
         mediaPlayer.seekTo(Integer.parseInt(time));
+            Log.e("Restore", "OK");
         }
-        Log.e("Restore", "Msg");
     }
+
+
+
+
+
 }
