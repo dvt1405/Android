@@ -170,6 +170,7 @@ public class Fragment_AddCustomPractice extends Fragment {
             return list;
         }
 
+
         @Override
         protected void onPostExecute(List<Practice> practices) {
             super.onPostExecute(practices);
