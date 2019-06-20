@@ -85,6 +85,16 @@ public class DBManager extends SQLiteOpenHelper {
             "Description VARCHAR(200)" +
             ")";
 
+    private static final String CREATE_LOCKED = "CREATE TABLE IF NOT EXISTS LOCKED(" +
+            "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "Name VARCHAR(200)," +
+            "PRICE DOUBLE," +
+            "IdGroup INTEGER," +
+            "CONSTRAINT fk_locked_" +
+            "   FOREIGN KEY (IdGroup)" +
+            "   REFERENCES PRACTICEGROUP(Id)" +
+            ")";
+
     public DBManager(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
@@ -100,6 +110,7 @@ public class DBManager extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(CREATE_GUIDE_PRACTICE);
         sqLiteDatabase.execSQL(CREATE_CUSTOM_TABLE);
         sqLiteDatabase.execSQL(CREATE_CUSTOMWORK_PRACTICE);
+        sqLiteDatabase.execSQL(CREATE_LOCKED);
     }
 
     @Override

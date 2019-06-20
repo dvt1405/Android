@@ -91,7 +91,7 @@ public class Fragment_HomeScreen extends Fragment {
             practice_prGroupDAO.addPractice_PrGroup(new Practice_PrGroup(practiceList.get(2), listPracticeGroup.get(1)));
             practice_prGroupDAO.addPractice_PrGroup(new Practice_PrGroup(practiceList.get(4), listPracticeGroup.get(1)));
             practice_prGroupDAO.addPractice_PrGroup(new Practice_PrGroup(practiceList.get(1), listPracticeGroup.get(2)));
-            practice_prGroupDAO.addPractice_PrGroup(new Practice_PrGroup(practiceList.get(3), listPracticeGroup.get(3)));
+//            practice_prGroupDAO.addPractice_PrGroup(new Practice_PrGroup(practiceList.get(3), listPracticeGroup.get(3)));
         }
         Guide_PracticeDAO guide_practiceDAO = new Guide_PracticeDAO(getActivity().getBaseContext());
         if (guide_practiceDAO.getGuide_PracticeDatabaseCount() == 0) {

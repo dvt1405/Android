@@ -16,7 +16,7 @@ import model.Guide;
 import model.Practice;
 import model.PracticeGroup;
 
-public class PracticeGroupDAO extends DBManager {
+public class PracticeGroupLockedDAO extends DBManager {
     private static final String TABLE_NAME = "PRACTICEGROUP";
     private static final String COLUMN_ID = "Id";
     private static final String COLUMN_NAME = "Name";
@@ -24,7 +24,7 @@ public class PracticeGroupDAO extends DBManager {
     private static final String COLUMN_DESCIPTION = "Description";
     private static final String COLUMN_LOCK = "Locked";
     private Context context;
-    public PracticeGroupDAO(Context context) {
+    public PracticeGroupLockedDAO(Context context) {
         super(context);
         this.context = context;
     }
@@ -35,12 +35,11 @@ public class PracticeGroupDAO extends DBManager {
             PracticeGroup pg3 = new PracticeGroup("Cơ ngực", R.drawable.chongday,"Bài tập cơ tay");
             PracticeGroup pg4 = new PracticeGroup("Cơ chân", R.drawable.nang_chan,"Bài tập cơ tay");
             PracticeGroup pg5 = new PracticeGroup("Tổng hợp 1", R.drawable.jumpsquat,"Bài tập cơ tay");
-
             pg1.setLocked(0);
             pg2.setLocked(0);
             pg3.setLocked(0);
-            pg4.setLocked(300);
-            pg5.setLocked(200);
+            pg4.setLocked(0);
+            pg5.setLocked(1);
             this.addPracticeGroup(pg1);
             this.addPracticeGroup(pg2);
             this.addPracticeGroup(pg3);
@@ -126,7 +125,6 @@ public class PracticeGroupDAO extends DBManager {
                         practiceGroup.setName(cursor.getString(1));
                         practiceGroup.setAvatar(cursor.getInt(2));
                         practiceGroup.setDescription(cursor.getString(3));
-                        practiceGroup.setLocked(cursor.getDouble(4));
                         listPracticeGroup.add(practiceGroup);
                     } while (cursor.moveToNext());
                     cursor.close();
@@ -142,7 +140,7 @@ public class PracticeGroupDAO extends DBManager {
         return null;
     }
     public List<PracticeGroup> getAllPracticeGroupLocked() {
-        String sql = "SELECT * FROM " + TABLE_NAME+" WHERE "+COLUMN_DESCIPTION+" != 'custom' AND "+COLUMN_LOCK+"!=0";
+        String sql = "SELECT * FROM " + TABLE_NAME+" WHERE "+COLUMN_DESCIPTION+" != 'custom' AND "+COLUMN_LOCK+"=1";
         try {
             List<PracticeGroup> listPracticeGroup = new ArrayList<>();
             try {
@@ -155,7 +153,6 @@ public class PracticeGroupDAO extends DBManager {
                         practiceGroup.setName(cursor.getString(1));
                         practiceGroup.setAvatar(cursor.getInt(2));
                         practiceGroup.setDescription(cursor.getString(3));
-                        practiceGroup.setLocked(cursor.getDouble(4));
                         listPracticeGroup.add(practiceGroup);
                     } while (cursor.moveToNext());
                     cursor.close();
@@ -206,7 +203,6 @@ public class PracticeGroupDAO extends DBManager {
             contentValues.put(COLUMN_NAME, practiceGroup.getName());
             contentValues.put(COLUMN_AVATAR, practiceGroup.getAvatar());
             contentValues.put(COLUMN_DESCIPTION, practiceGroup.getDescription());
-            contentValues.put(COLUMN_LOCK,practiceGroup.getLocked());
             int update = sqLiteDatabase.update(TABLE_NAME, contentValues, COLUMN_ID + "=?", new String[]{String.valueOf(practiceGroup.getId())});
             Log.d("Updated: ", update + "");
             sqLiteDatabase.close();

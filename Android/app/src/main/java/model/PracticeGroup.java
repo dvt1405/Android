@@ -9,7 +9,7 @@ public class PracticeGroup implements Serializable {
     private String name;
     private List<Practice> listPractice;
     private String description;
-    private int locked;
+    private double locked;
 
 
     public PracticeGroup(int id, String name, int avatar, String desciption) {
@@ -75,11 +75,11 @@ public class PracticeGroup implements Serializable {
         this.id = id;
     }
 
-    public int getLocked() {
+    public double getLocked() {
         return locked;
     }
 
-    public void setLocked(int locked) {
+    public void setLocked(double locked) {
         this.locked = locked;
     }
 }

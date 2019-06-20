@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 
 import com.fitness.customwork.Fragment_CustomWorkScreen;
 import com.fitness.homescreen.Fragment_HomeScreen;
+import com.fitness.locked.Fragment_Locked_Practice;
 
 import sqlite.GuideDAO;
 import sqlite.PracticeDAO;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                     loadFragmentt(new Fragment_CustomWorkScreen());
                     return true;
                 case R.id.navigation_cart:
-                    loadFragmentt(new Fragment_HomeScreen());
+                    loadFragmentt(new Fragment_Locked_Practice());
                     return true;
                 case R.id.navigation_profile:
                     loadFragmentt(new Fragment_HomeScreen());

@@ -1,6 +1,7 @@
 package com.fitness.customwork;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -22,8 +23,10 @@ import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.fitness.MainActivity;
 import com.fitness.R;
 import com.fitness.homescreen.FragmentListPractice;
+import com.fitness.locked.Checkout;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -70,6 +73,8 @@ public class Fragment_CustomWorkScreen extends Fragment {
                     .replace(R.id.frameLayoutMainActivity, new Fragment_AddCustomPractice())
                     .addToBackStack("backStackCustomWork")
                     .commit();
+//            Intent intent = new Intent(getActivity(),Checkout.class);
+//            startActivity(intent);
 
         }
     };
