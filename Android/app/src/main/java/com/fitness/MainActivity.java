@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 import com.fitness.customwork.Fragment_CustomWorkScreen;
 import com.fitness.homescreen.Fragment_HomeScreen;
 import com.fitness.locked.Fragment_Locked_Practice;
+import com.fitness.timer.Fragment_timer;
 
 import sqlite.GuideDAO;
 import sqlite.PracticeDAO;
@@ -30,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         initView();
         navigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
         navigationView.setOnNavigationItemReselectedListener(onNavigationItemReselectedListener);
-
     }
     private void initView() {
         navigationBottom = getSupportActionBar();
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                     loadFragmentt(new Fragment_Locked_Practice());
                     return true;
                 case R.id.navigation_profile:
-                    loadFragmentt(new Fragment_HomeScreen());
+                    loadFragmentt(new Fragment_timer());
                     return true;
             }
             return false;

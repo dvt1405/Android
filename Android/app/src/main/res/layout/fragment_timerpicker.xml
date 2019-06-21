@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Time to practice"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="monospace"
+        />
+    <TimePicker
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:id="@+id/timePicker"
+        ></TimePicker>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        >
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Hen gio"
+            android:fontFamily="monospace"
+            android:textSize="20sp"
+            android:id="@+id/buttonSetTimer"
+            />
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Ket thuc"
+            android:fontFamily="monospace"
+            android:textSize="20sp"
+            android:id="@+id/buttonEndTimer"
+
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Gio tap:"
+            android:gravity="center"
+            android:fontFamily="monospace"
+            android:textSize="20sp"
+            />
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="hh:mm"
+            android:gravity="center"
+            android:fontFamily="monospace"
+            android:textSize="20sp"
+            android:id="@+id/textViewTimer"
+
+            />
+    </LinearLayout>
+</LinearLayout>

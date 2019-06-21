@@ -29,7 +29,6 @@ public class Fragment_Locked_Practice extends Fragment {
     private ListView listView;
     private List<PracticeGroup> listPracticeGroup;
     Button payMoMo;
-    private final String passworkConnect ="d3ea5409901f250d2d658d6b94fdf7d8";
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

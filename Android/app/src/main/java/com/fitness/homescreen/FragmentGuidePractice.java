@@ -1,5 +1,9 @@
 package com.fitness.homescreen;
 
+import android.app.AlarmManager;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.DrawableContainer;
@@ -12,6 +16,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -29,6 +34,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.fitness.MainActivity;
 import com.fitness.R;
 
 import java.util.ArrayList;
@@ -56,7 +62,9 @@ public class FragmentGuidePractice extends Fragment{
     private ViewFlipper viewFlipper;
     private ImageView imageView;
     private boolean isPlaying;
-
+    NotificationCompat.Builder nBuilder;
+    NotificationManager notificationManager;
+    final int notificationID = 84;
     private int currentIndexImage = 0;
     TestPlayMusicThread testPlayMusicThread;
 
@@ -140,6 +148,7 @@ public class FragmentGuidePractice extends Fragment{
         @Override
         public void onClick(View v) {
             handler.removeCallbacks(testPlayMusicThread);
+            notificationManager.cancel(notificationID);
             mediaPlayer.stop();
             getFragmentManager().popBackStack("backStackListPractice", 1);
         }
@@ -164,13 +173,28 @@ public class FragmentGuidePractice extends Fragment{
                 isPlaying = true;
                 testPlayMusicThread = new TestPlayMusicThread(mediaPlayer, seekBar, handler, textViewTimer);
                 handler.postDelayed(testPlayMusicThread,50);
+                Intent intent = new Intent(getContext(), MainActivity.class);
+                intent.putExtra("off","off");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                PendingIntent sc = PendingIntent.getBroadcast(getContext(),0,intent,0);
+
+                nBuilder = new NotificationCompat.Builder(getContext())
+                        .setSmallIcon(R.drawable.bicycleclim)
+                        .setContentTitle("Is Playing")
+                        .setContentText("Task is running")
+                        .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                        .setContentIntent(sc)
+                        .addAction(R.drawable.ic_pause,"Pause",sc)
+                ;
+                notificationManager = (NotificationManager) getContext().getSystemService(getContext().NOTIFICATION_SERVICE);
+                notificationManager.notify(notificationID,nBuilder.build());
             }else {
                 mediaPlayer.pause();
                 buttonStart.setBackgroundResource(R.drawable.ic_play);
                 isPlaying = false;
-            }
+                notificationManager.cancel(notificationID);
         }
-    };
+    }};
     private SeekBar.OnSeekBarChangeListener onSeekBarChanged
             = new SeekBar.OnSeekBarChangeListener() {
         @Override
